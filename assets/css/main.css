@@ -1,0 +1,23 @@
+.container{
+    display: block;
+    width: 880px;
+    margin: 0 auto;
+}
+.row{
+    padding: 5px 10px;
+    margin: 5px 0px;
+}
+.row:after{
+  content: "";
+  clear: both;
+  display: table;
+}
+.left{
+    float: left;
+    width: 430px;
+}
+.right{
+    float: right;
+    width: 410px;
+    padding: 3px 10px;
+}

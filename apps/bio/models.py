@@ -19,5 +19,3 @@ class Person(models.Model):
     class Meta:
         verbose_name = u"Person"
         verbose_name_plural = u"Persons"
-
-

@@ -1,8 +1,9 @@
 from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
-admin.autodiscover()
 from apps.bio.views import AboutMe
+admin.autodiscover()
+
 urlpatterns = patterns(
     '',
     # Examples:

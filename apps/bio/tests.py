@@ -18,9 +18,26 @@ class BioTests(TestCase):
 
     def test_view(self):
         """Test hard-coded data in view"""
-
+        person, _ = Person.objects.get_or_create(
+            name="Sergey",
+            last_name="Nelepa",
+            contacts="+380664290126",
+            birthday=date(1995, 07, 11),
+            bio='Test data',
+            email='nelepa1995@mail.ru',
+            jabber='arzahs@jabber.ru',
+            skype='skype',
+            other_contacts='Test data',
+        )
         self.assertIn('person', self.response.context)
-        self.assertIn('name', self.response.context['person'])
+        self.assertIn(person.name, self.response.content)
+        self.assertIn(person.last_name, self.response.content)
+        self.assertIn(person.contacts, self.response.content)
+        self.assertIn(person.bio, self.response.content)
+        self.assertIn(person.email, self.response.content)
+        self.assertIn(person.jabber, self.response.content)
+        self.assertIn(person.skype, self.response.content)
+        self.assertIn(person.other_contacts, self.response.content)
 
     def test_person(self):
         """Test model person """
@@ -35,6 +52,5 @@ class BioTests(TestCase):
             skype='skype',
             other_contacts='Test data'
         )
-        self.assertEqual(person.__str__(), u"{0} {1}".format(person.last_name, person.name))
-
-
+        self.assertEqual(person.__str__(),
+                         u"{0} {1}".format(person.last_name, person.name))

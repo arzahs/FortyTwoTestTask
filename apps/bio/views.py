@@ -20,5 +20,3 @@ class AboutMe(View):
             other_contacts='Test data',
         )
         return render_to_response("bio/about_me.html", {'person': person})
-
-

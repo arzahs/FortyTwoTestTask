@@ -5,6 +5,7 @@ from django.db import models
 class Person(models.Model):
     name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
+    contacts = models.CharField(max_length=255, default="")
     birthday = models.DateField()
     email = models.EmailField()
     jabber = models.EmailField()

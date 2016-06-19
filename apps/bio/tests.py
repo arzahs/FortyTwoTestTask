@@ -27,6 +27,7 @@ class BioTests(TestCase):
         person, _ = Person.objects.get_or_create(
             name="Sergey",
             last_name="Nelepa",
+            contacts="+380664290126",
             birthday=date(1995, 11, 07),
             bio='Test data',
             email='nelepa1995@mail.ru',

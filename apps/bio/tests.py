@@ -24,7 +24,7 @@ class BioTests(TestCase):
 
     def test_person(self):
         """Test model person """
-        person, _ = Person.objects.get_or_created(
+        person, _ = Person.objects.get_or_create(
             name="Sergey",
             last_name="Nelepa",
             birthday=date(1995, 11, 07),

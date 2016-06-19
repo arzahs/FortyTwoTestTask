@@ -8,10 +8,10 @@
 
     <div class="row">
         <div class="left">
-            Name Sergey
+            Name {{ person.name }}
         </div>
         <div class="right">
-            Contacts: +380664290126
+            Contacts: {{ person.contacts }}
         </div>
 
 
@@ -19,10 +19,10 @@
 
     <div class="row">
         <div class="left">
-            Last name Nelepa
+            Last name {{ person.last_name }}
         </div>
         <div class="right">
-            Email: nelepa1995@mail.ru
+            Email: {{ person.email }}
         </div>
 
 
@@ -30,42 +30,40 @@
     <div class="row">
 
         <div class="right">
-            Jabber: abla@blabla
-        </div>
-
-
-    </div>
-    <div class="row">
-         <div class="left">
-            Date of birth 11.08.1995
-        </div>
-        <div class="right">
-             Skype: idkjhklj
+            Jabber: {{ person.jabber }}
         </div>
 
 
     </div>
     <div class="row">
          <div class="left">
-            Bio <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-    It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-    essentially unchanged.
-    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-    and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-</p>
+            Date of birth {{ person.birthday }}
+        </div>
+        <div class="right">
+             Skype {{ person.skype }}
+        </div>
+
+
+    </div>
+    <div class="row">
+         <div class="left">
+            Bio <p>
+            <ul>
+             {% for item in person.bio %}
+                 <li>{{ item }}</li>
+             {% endfor %}
+            </ul>
+         </p>
         </div>
         <div class="right">
                Other contacts:
-    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-    It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-    essentially unchanged.
-    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-    and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-</p>
+    <p>
+        <ul>
+             {% for item in person.other_contacts %}
+                 <li>{{ item }}</li>
+             {% endfor %}
+            </ul>
+    </p>
         </div>
 
 

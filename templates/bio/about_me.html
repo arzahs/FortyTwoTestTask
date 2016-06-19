@@ -48,21 +48,14 @@
     <div class="row">
          <div class="left">
             Bio <p>
-            <ul>
-             {% for item in person.bio %}
-                 <li>{{ item }}</li>
-             {% endfor %}
-            </ul>
+            {{ person.bio }}
          </p>
         </div>
         <div class="right">
                Other contacts:
     <p>
-        <ul>
-             {% for item in person.other_contacts %}
-                 <li>{{ item }}</li>
-             {% endfor %}
-            </ul>
+            {{ person.other_contacts }}
+
     </p>
         </div>
 

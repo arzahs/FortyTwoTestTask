@@ -14,17 +14,8 @@ class AboutMe(View):
                   "jabber": "arzahs@42cc.co",
                   "skype": "dgarzahs",
                   "birthday": "11.07.1995",
-                  "bio": {
-                      "wertewwrtwqerwqerwqer",
-                      "afdsafasdfsadfasdfsadf",
-                      "asdfsadfsdafsdfsdfsdfsd"
-                          },
-                  "other_contacts": {
-                      "sadfsdfsdaf",
-                      "asdfsadfasd",
-                      "sadfsdfsdfas"
-                  }
-
+                  "bio": "sdfsdk fjsadkljf sadkfj aksdjf",
+                  "other_contacts": "dafasdfsdafsadfsadf",
                   }
         return render_to_response("bio/about_me.html", {'person': person})
 

@@ -9,4 +9,4 @@ class BioTests(TestCase):
         "testing html layout"
         response = self.client.get(reverse('about_me'))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual('Name', response.content)
+        self.assertIn('Name', response.content)

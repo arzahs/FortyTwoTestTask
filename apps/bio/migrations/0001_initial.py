@@ -3,7 +3,6 @@ from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
-from django.core.management import call_command
 
 class Migration(SchemaMigration):
 
@@ -21,7 +20,7 @@ class Migration(SchemaMigration):
             ('other_contacts', self.gf('django.db.models.fields.TextField')()),
         ))
         db.send_create_signal(u'bio', ['Person'])
-        call_command("loaddata", "users.json")
+
 
 
     def backwards(self, orm):

@@ -4,7 +4,6 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
-
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
@@ -12,6 +11,7 @@ class Migration(SchemaMigration):
         db.add_column(u'bio_person', 'contacts',
                       self.gf('django.db.models.fields.CharField')(default='', max_length=255),
                       keep_default=False)
+
 
 
     def backwards(self, orm):

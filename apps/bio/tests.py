@@ -54,3 +54,15 @@ class BioTests(TestCase):
         )
         self.assertEqual(person.__str__(),
                          u"{0} {1}".format(person.last_name, person.name))
+
+
+class RequestTest(TestCase):
+
+    def setUp(self):
+        self.response = self.client.get(reverse('requests_list'))
+
+    def test_context_data(self):
+        """ Test hard-coded data """
+        self.assertEqual(self.response.status_code, 200)
+        self.assertIn("requests", self.response.context)
+

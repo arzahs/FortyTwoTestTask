@@ -19,3 +19,19 @@ class Person(models.Model):
     class Meta:
         verbose_name = u"Person"
         verbose_name_plural = u"Persons"
+
+
+class Request(models.Model):
+    method = models.CharField(max_length=4)
+    path = models.CharField(max_length=100)
+    status_code = models.CharField(max_length=3)
+    server_protocol = models.CharField(max_length=3)
+    content_len = models.IntegerField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return u"{0} {1} {2}".format(self.method, self.path, self.date)
+
+    class Meta:
+        verbose_name = u"Request"
+        verbose_name_plural = u"Requests"

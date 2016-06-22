@@ -52,4 +52,3 @@ class RequestList(View):
             },
         ]
         return render_to_response("bio/requests.html", {"requests": requests})
-

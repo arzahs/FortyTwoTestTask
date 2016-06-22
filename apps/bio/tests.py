@@ -69,8 +69,7 @@ class RequestTest(TestCase):
 
     def test_model_request(self):
         """ Test model Request """
-
-        requests = Requests.objects.all()
+        requests = Request.objects.all()
         self.assertEqual(requests.count(), 0)
         req, _ = Request.objects.get_or_create(
             id=1,
@@ -80,7 +79,5 @@ class RequestTest(TestCase):
             server_protocol='http',
             content_len='1200'
         )
-        requests = Requests.objects.all()
+        requests = Request.objects.all()
         self.assertEqual(requests.count(), 1)
-
-

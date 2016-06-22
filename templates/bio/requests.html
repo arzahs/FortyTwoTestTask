@@ -8,10 +8,11 @@
 {% block content %}
     <a href="{% url "about_me" %}">Main page</a>
     <div class="row">
-        <ul>
+        <table>
+
             {% for request in requests %}
                 <li data-id="{{ request.id }}">{{ request.method }} {{ request.path }} {{ request.status_code }} {{ request.server_protocol }} {{ request.content_len }}</li>
             {% endfor %}
-        </ul>
+        </table>
     </div>
 {% endblock %}

@@ -81,3 +81,17 @@ class RequestTest(TestCase):
         )
         requests = Request.objects.all()
         self.assertEqual(requests.count(), 1)
+
+    def test_middleware(self):
+        """Test middleware that save request in DB"""
+        requests = Request.objects.all()
+        self.assertEqual(requests.count(), 0)
+        self.response = self.client.get(reverse('requests_list'))
+        requests = Request.objects.all()
+        self.assertEqual(requests.count(), 0)
+        self.response = self.client.get(reverse('about_me'))
+        requests = Request.objects.all()
+        self.assertEqual(requests.count(), 1)
+        self.response = self.client.get(reverse('about_me'))
+        requests = Request.objects.all()
+        self.assertEqual(requests.count(), 2)

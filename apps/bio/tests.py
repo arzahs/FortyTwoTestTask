@@ -3,6 +3,7 @@ from datetime import date
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from apps.bio.models import Person
+from apps.bio.models import Request
 # Create your tests here.
 
 
@@ -65,4 +66,21 @@ class RequestTest(TestCase):
         """ Test hard-coded data """
         self.assertEqual(self.response.status_code, 200)
         self.assertIn("requests", self.response.context)
+
+    def test_model_request(self):
+        """ Test model Request """
+
+        requests = Requests.objects.all()
+        self.assertEqual(requests.count(), 0)
+        req, _ = Request.objects.get_or_create(
+            id=1,
+            method='POST',
+            path='/test/',
+            status_code='200',
+            server_protocol='http',
+            content_len='1200'
+        )
+        requests = Requests.objects.all()
+        self.assertEqual(requests.count(), 1)
+
 

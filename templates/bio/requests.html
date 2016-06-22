@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
+{% block title %}0 new requests {% endblock title %}
+
 {% block body_id %}requests_list{% endblock %}
 
 {% block body_class %}container{% endblock %}
@@ -8,11 +12,18 @@
 {% block content %}
     <a href="{% url "about_me" %}">Main page</a>
     <div class="row">
-        <table>
+    <h2>0 new requests</h2>
+        <ul>
 
             {% for request in requests %}
                 <li data-id="{{ request.id }}">{{ request.method }} {{ request.path }} {{ request.status_code }} {{ request.server_protocol }} {{ request.content_len }}</li>
             {% endfor %}
-        </table>
+        </ul>
     </div>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static 'js/requests.js' %}"></script>
 {% endblock %}

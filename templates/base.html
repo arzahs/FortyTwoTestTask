@@ -18,6 +18,13 @@
     </head>
     <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
         <div class="header"><h1>42 Coffee Cups Test Assignment</h1></div>
-        {% block content %}{% endblock content %}
+
+        {% block content %}
+        {% endblock content %}
+{#    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>#}
+
+        {% block scripts %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        {% endblock %}
     </body>
 </html>

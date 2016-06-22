@@ -20,3 +20,36 @@ class AboutMe(View):
             other_contacts='Test data',
         )
         return render_to_response("bio/about_me.html", {'person': person})
+
+
+class RequestList(View):
+
+    def get(self, request, *args, **kwargs):
+        requests = [
+            {
+                'id': 1,
+                'method': 'POST',
+                'path': '/test/',
+                'status_code': '200',
+                'server_protocol': 'http',
+                'content_len': '1200'
+            },
+            {
+                'id': 2,
+                'method': 'POST',
+                'path': '/test/',
+                'status_code': '200',
+                'server_protocol': 'http',
+                'content_len': '1200'
+            },
+            {
+                'id': 2,
+                'method': 'POST',
+                'path': '/test/',
+                'status_code': '200',
+                'server_protocol': 'http',
+                'content_len': '1200'
+            },
+        ]
+        return render_to_response("bio/requests.html", {"requests": requests})
+

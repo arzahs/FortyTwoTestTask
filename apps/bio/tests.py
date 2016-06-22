@@ -110,7 +110,9 @@ class RequestTest(TestCase):
             server_protocol='http',
             content_len='1200'
         )
-        self.response = self.client.get('{0}?id=1'.format(reverse('requests_list')))
+        self.response = self.client.get('{0}?id=1'.format(
+            reverse('requests_list')
+        ))
         self.assertIn(str(req.id), self.response.content)
         self.assertIn(req.method, self.response.content)
         self.assertIn(req.path, self.response.content)

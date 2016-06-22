@@ -5,7 +5,7 @@ from apps.bio.models import Request
 class SaveRequestMiddleware():
 
     def process_response(self, request, response):
-        if request.path != reverse('requests_list'):
+        if request.path != reverse('requests_list') and not request.is_ajax():
             Request.objects.create(
                 path=request.path,
                 method=request.method,

@@ -4,6 +4,7 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 from apps.bio.models import Person
 from apps.bio.models import Request
+from apps.bio.forms import EditPersonForm
 # Create your tests here.
 
 
@@ -119,3 +120,19 @@ class RequestTest(TestCase):
         self.assertIn(req.status_code, self.response.content)
         self.assertIn(req.server_protocol, self.response.content)
         self.assertIn(req.content_len, self.response.content)
+
+    class TestEditForm(TestCase):
+
+        def test_form(self):
+            form = EditPersonForm(data={
+                'name': "Sergey",
+                'last_name': "Nelepa",
+                'contacts': "+380664290126",
+                'birthday': "1995, 07, 11",
+                'bio':'Test data',
+                'email': 'nelepa1995@mail.ru',
+                'jabber': 'arzahs@jabber.ru',
+                'skype': 'skype',
+                'other_contacts': 'Test data'
+            })
+            self.assertTrue(form.is_valid())

@@ -93,6 +93,6 @@
 
 {% block scripts %}
     {{ block.super }}
-    <script src="http://malsup.github.io/jquery.form.js"></script>
+    <script src="{% static 'js/jquery.form.js' %}"></script>
     <script src="{% static 'js/edit-form.js' %}"></script>
 {% endblock %}

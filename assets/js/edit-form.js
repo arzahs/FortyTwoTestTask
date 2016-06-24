@@ -27,6 +27,40 @@ $(document).ready(function () {
     $(function() {
         $( "#id_birthday" ).datepicker({ dateFormat: 'yy-mm-dd' });
     }); 
+    
+    
+    $("#id_photo").change(function () {
+        if (this.files && this.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $("#photo").show().attr('src', e.target.result);
+        }
+        reader.readAsDataURL(this.files[0]);
+    }
+    });
+
+
+    $("#edit_form").ajaxForm({
+        beforeSubmit: function () {
+            $("#status_save").show();
+            $('input').prop('disabled', true);
+            $('textarea').prop('disabled', true);
+
+        },
+        success: function () {
+            $("#status_success").show();
+          setTimeout(function(){
+              location.reload()
+          }, 5000);
+
+        },
+        error: function () {
+            $("#status_save").hide();
+            $('input').prop('disabled', false);
+            $('textarea').prop('disabled', false);
+            $("#status_error").show();
+        }
+    });
 
 }
 );

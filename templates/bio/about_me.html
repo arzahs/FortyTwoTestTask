@@ -7,7 +7,7 @@
 {% block login %}
     <div class="login">
             {% if user.is_authenticated %}
-                <a href="#">Edit</a>
+                <a href="{% url "edit_form" %}">Edit</a>
             {% else %}
                 <a href="#">Login</a>
             {% endif %}

@@ -21,6 +21,7 @@ class BioTests(TestCase):
     def test_view(self):
         """Test hard-coded data in view"""
         person, _ = Person.objects.get_or_create(
+            pk=1,
             name="Sergey",
             last_name="Nelepa",
             contacts="+380664290126",
@@ -43,7 +44,7 @@ class BioTests(TestCase):
 
     def test_person(self):
         """Test model person """
-        person, _ = Person.objects.get_or_create(
+        person = Person.objects.create(
             name="Sergey",
             last_name="Nelepa",
             contacts="+380664290126",
@@ -140,19 +141,19 @@ class EditFormTest(TestCase):
             skype='skype',
             other_contacts='Test data',
         )
-        self.response = self.client.get(reverse('edit_page'))
+        self.response = self.client.get(reverse('edit_form'))
         self.assertIn('form', self.response.context)
-        self.response = self.client.post(reverse('edit_page'), {
+        self.response = self.client.post(reverse('edit_form'), {
             'name': "Sergey1",
             'last_name': "Nelepa1",
             'contacts': "+380664290126",
-            'birthday': "1995, 07, 11",
+            'birthday': "1995-07-11",
             'bio': 'Test data',
             'email': 'nelepa1995@mail.ru',
             'jabber': 'arzahs@jabber.ru',
             'skype': 'skype',
             'other_contacts': 'Test data'})
-        self.assertEqual(self.response.status_code, 200)
+        self.assertEqual(self.response.status_code, 302)
         self.response = self.client.get(reverse('about_me'))
         self.assertIn('Sergey1', self.response.content)
         self.assertIn('Nelepa1', self.response.content)

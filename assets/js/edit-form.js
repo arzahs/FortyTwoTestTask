@@ -17,7 +17,7 @@ $(document).ready(function () {
             $("#id_jabber").val(data['jabber']);
             $("#id_bio").text(data['bio']);
             $("#id_other_contacts").text(data['other_contacts']);
-            $("#id_photo").val(data['photo']);
+            //$("#id_photo").val(data['photo']);
             $("#photo").attr('src', data['photo']);
             $("#photo").show();
             $("#status_load").hide();
@@ -48,6 +48,7 @@ $(document).ready(function () {
 
         },
         success: function () {
+            $("#status_save").hide();
             $("#status_success").show();
           setTimeout(function(){
               location.reload()

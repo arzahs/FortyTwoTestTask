@@ -52,12 +52,8 @@
          <div class="left">
             Photo: <p>
              {{ form.photo }}
-             <input type="file" id="id_photo">
-             {% if form.photo %}
-             <img id="photo" src="{{ form.photo.url }}"  width="200px">
-             {% else %}
-             <img id="photo" src=""  width="200px" style="display: none;">
-             {% endif %}
+             <img id="photo" src="" style="display: none;">
+
          </p>
         </div>
         <div class="right">

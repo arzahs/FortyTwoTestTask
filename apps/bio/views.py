@@ -36,6 +36,10 @@ class AboutMe(View):
             )
 
         if request.is_ajax():
+            if person.photo:
+                url = person.photo.url
+            else:
+                url = ''
             return HttpResponse(json.dumps({
                 'name': person.name,
                 'last_name': person.last_name,
@@ -46,7 +50,7 @@ class AboutMe(View):
                 'jabber': person.jabber,
                 'skype': person.skype,
                 'other_contacts': person.other_contacts,
-                'photo': person.photo.url
+                'photo': url
 
             }), mimetype="application/json")
 

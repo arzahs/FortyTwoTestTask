@@ -1,6 +1,8 @@
 # coding: utf-8
 import json
+import os
 from PIL import Image
+from django.conf import settings
 from datetime import date
 from django.views.generic import View, FormView
 from django.core.exceptions import ObjectDoesNotExist
@@ -74,11 +76,6 @@ class EditPersonView(FormView):
     form_class = EditPersonForm
     template_name = "bio/edit_profile.html"
 
-    # def get_initial(self, form_class):
-    #     p = Person.objects.get(pk=1)
-    #     form = form_class(initial=p)
-    #     return form
-
     def post(self, request, *args, **kwargs):
         person = Person.objects.get(pk=1)
         form = EditPersonForm(request.POST, request.FILES, instance=person)
@@ -93,9 +90,9 @@ class EditPersonView(FormView):
                     errors_dict[error] = e
                     print "bad request"
             return HttpResponseBadRequest(json.dumps(errors_dict))
-        # if person.photo.url:
-        #     image = Image.open(person.photo.path)
-        #     size = (200, 200)
-        #     image.thumbnail(size, Image.ANTIALIAS)
-        #     image.save(person.photo.url)
+        if person.photo:
+            path = os.path.join(settings.BASE_DIR, person.photo.path)
+            img = Image.open(path)
+            img.thumbnail((200, 200), Image.ANTIALIAS)
+            img.save(path)
         return redirect('about_me')

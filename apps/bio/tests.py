@@ -122,6 +122,7 @@ class RequestTest(TestCase):
         self.assertIn(req.server_protocol, self.response.content)
         self.assertIn(req.content_len, self.response.content)
 
+
 class EditFormTest(TestCase):
 
     def setUp(self):
@@ -165,15 +166,10 @@ class EditFormTest(TestCase):
             'last_name': "Nelepa",
             'contacts': "+380664290126",
             'birthday': "1995-07-11",
-            'bio':'Test data',
+            'bio': 'Test data',
             'email': 'nelepa1995@mail.ru',
             'jabber': 'arzahs@jabber.ru',
             'skype': 'skype',
             'other_contacts': 'Test data',
         })
         self.assertTrue(form.is_valid())
-
-
-
-
-

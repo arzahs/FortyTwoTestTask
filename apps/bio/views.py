@@ -42,3 +42,5 @@ class RequestList(View):
             requests = Request.objects.all().order_by('-date')[:10]
 
         return render_to_response("bio/requests.html", {"requests": requests})
+
+

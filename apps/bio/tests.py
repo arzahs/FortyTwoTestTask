@@ -121,55 +121,56 @@ class RequestTest(TestCase):
         self.assertIn(req.server_protocol, self.response.content)
         self.assertIn(req.content_len, self.response.content)
 
-    class EditFormTest(TestCase):
+class EditFormTest(TestCase):
 
-        def test_edit(self):
-            """ Test for view that edit main page """
-            print 'run'
-            self.client.login(username='admin', password='admin')
-            person, _ = Person.objects.get_or_create(
-                pk=1,
-                name="Sergey",
-                last_name="Nelepa",
-                contacts="+380664290126",
-                birthday=date(1995, 07, 11),
-                bio='Test data',
-                email='nelepa1995@mail.ru',
-                jabber='arzahs@jabber.ru',
-                skype='skype',
-                other_contacts='Test data',
-            )
-            self.response = self.client.get(reverse('edit_page'))
-            self.assertIn('form', self.response.context)
-            self.response = self.client.post(reverse('edit_page'), {
-                'name': "Sergey1",
-                'last_name': "Nelepa1",
-                'contacts': "+380664290126",
-                'birthday': "1995, 07, 11",
-                'bio': 'Test data',
-                'email': 'nelepa1995@mail.ru',
-                'jabber': 'arzahs@jabber.ru',
-                'skype': 'skype',
-                'other_contacts': 'Test data'})
-            self.assertEqual(self.response.status_code, 200)
-            self.response = self.client.get(reverse('about_me'))
-            self.assertIn('Sergey1', self.response.content)
-            self.assertIn('Nelepa1', self.response.content)
+    def setUp(self):
+        self.client.login(username='admin', password='admin')
 
-        def test_form(self):
-            """ Test for edit main form """
-            form = EditPersonForm(data={
-                'name': "Sergey",
-                'last_name': "Nelepa",
-                'contacts': "+380664290126",
-                'birthday': "1995, 07, 11",
-                'bio':'Test data',
-                'email': 'nelepa1995@mail.ru',
-                'jabber': 'arzahs@jabber.ru',
-                'skype': 'skype',
-                'other_contacts': 'Test data'
-            })
-            self.assertTrue(form.is_valid())
+    def test_edit(self):
+        """ Test for view that edit main page """
+        person, _ = Person.objects.get_or_create(
+            pk=1,
+            name="Sergey",
+            last_name="Nelepa",
+            contacts="+380664290126",
+            birthday=date(1995, 07, 11),
+            bio='Test data',
+            email='nelepa1995@mail.ru',
+            jabber='arzahs@jabber.ru',
+            skype='skype',
+            other_contacts='Test data',
+        )
+        self.response = self.client.get(reverse('edit_page'))
+        self.assertIn('form', self.response.context)
+        self.response = self.client.post(reverse('edit_page'), {
+            'name': "Sergey1",
+            'last_name': "Nelepa1",
+            'contacts': "+380664290126",
+            'birthday': "1995, 07, 11",
+            'bio': 'Test data',
+            'email': 'nelepa1995@mail.ru',
+            'jabber': 'arzahs@jabber.ru',
+            'skype': 'skype',
+            'other_contacts': 'Test data'})
+        self.assertEqual(self.response.status_code, 200)
+        self.response = self.client.get(reverse('about_me'))
+        self.assertIn('Sergey1', self.response.content)
+        self.assertIn('Nelepa1', self.response.content)
+
+    def test_form(self):
+        """ Test for edit main form """
+        form = EditPersonForm(data={
+            'name': "Sergey",
+            'last_name': "Nelepa",
+            'contacts': "+380664290126",
+            'birthday': "1995-07-11",
+            'bio':'Test data',
+            'email': 'nelepa1995@mail.ru',
+            'jabber': 'arzahs@jabber.ru',
+            'skype': 'skype',
+            'other_contacts': 'Test data',
+        })
+        self.assertTrue(form.is_valid())
 
 
 

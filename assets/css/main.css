@@ -21,3 +21,13 @@
     width: 410px;
     padding: 3px 10px;
 }
+.logo{
+    float: left;
+    width: 80%;
+}
+.login{
+    display: block;
+    float: right;
+    width: 20%;
+    padding-top: 25px;
+}

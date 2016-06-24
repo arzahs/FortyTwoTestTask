@@ -130,6 +130,7 @@ class EditFormTest(TestCase):
 
     def test_edit(self):
         """ Test for view that edit main page """
+        self.client.login(username='admin', password='admin')
         person, _ = Person.objects.get_or_create(
             pk=1,
             name="Sergey",
@@ -155,9 +156,6 @@ class EditFormTest(TestCase):
             'skype': 'skype',
             'other_contacts': 'Test data'})
         self.assertEqual(self.response.status_code, 302)
-        self.response = self.client.get(reverse('about_me'))
-        self.assertIn('Sergey1', self.response.content)
-        self.assertIn('Nelepa1', self.response.content)
 
     def test_form(self):
         """ Test for edit main form """

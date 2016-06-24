@@ -5,6 +5,8 @@ from PIL import Image
 from django.conf import settings
 from datetime import date
 from django.views.generic import View, FormView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.core.exceptions import ObjectDoesNotExist
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
@@ -76,6 +78,7 @@ class EditPersonView(FormView):
     form_class = EditPersonForm
     template_name = "bio/edit_profile.html"
 
+    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         person = Person.objects.get(pk=1)
         form = EditPersonForm(request.POST, request.FILES, instance=person)

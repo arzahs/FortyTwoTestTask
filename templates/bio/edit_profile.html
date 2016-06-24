@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block body_id %}aboutme{% endblock %}
+
+{% block body_class %}container{% endblock %}
+
+{% block content %}
+    <form  id="edit_form" action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="left">
+            Name: {{ form.name }}
+        </div>
+        <div class="right">
+            Contacts: {{ form.contacts }}
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="left">
+            Last name {{ form.last_name }}
+        </div>
+        <div class="right">
+            Email: {{ form.email }}
+        </div>
+
+
+    </div>
+    <div class="row">
+
+        <div class="right">
+            Jabber: {{ form.jabber }}
+        </div>
+
+
+    </div>
+    <div class="row">
+         <div class="left">
+            Date of birth {{ form.birthday }}
+        </div>
+        <div class="right">
+             Skype {{ form.skype }}
+        </div>
+
+
+    </div>
+    <div class="row">
+         <div class="left">
+            Photo: <p>
+             {{ form.photo }}
+             <img id="photo" src="" style="display: none;">
+
+         </p>
+        </div>
+        <div class="right">
+               Other contacts:
+    <p>
+            {{ form.other_contacts }}
+
+    </p>
+        </div>
+
+
+    </div>
+      <div class="row">
+         <div class="right">
+            Bio: <p>
+            {{ form.bio }}
+         </p>
+        </div>
+        </div>
+        <p id="status_save">Saving data...</p>
+        <p id="status_load">Loading data...</p>
+        <p id="status_error">Error, repeat late.</p>
+        <p id="status_success" style="display: none;">Changes have been saved</p>
+        <input type="submit" value="Save">
+        <a href="{% url 'about_me' %}">Сancel</a>
+
+    </div>
+        </form>
+    <hr>
+    <a href="{% url "requests_list" %}">Requests</a>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static 'js/jquery.form.js' %}"></script>
+    <script src="{% static 'js/edit-form.js' %}"></script>
+{% endblock %}

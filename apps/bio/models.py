@@ -12,6 +12,7 @@ class Person(models.Model):
     skype = models.CharField(max_length=255)
     bio = models.TextField()
     other_contacts = models.TextField()
+    photo = models.ImageField(upload_to='person', blank=True, null=True)
 
     def __str__(self):
         return u"{0} {1}".format(self.last_name, self.name)

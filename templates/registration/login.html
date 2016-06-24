@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block body_id %}login{% endblock %}
+
+{% block body_class %}container{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <form action="" method="post">
+            {{ form.errors }}
+            {% csrf_token %}
+            <label for="id_username">Username: </label>
+            <input type="text" id="id_username" name="username">
+            <br>
+            <label for="id_password">Password: </label>
+            <input type="password" id="id_password" name="password">
+            <br>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+{% endblock %}

@@ -171,3 +171,14 @@ class EditFormTest(TestCase):
             'other_contacts': 'Test data',
         })
         self.assertTrue(form.is_valid())
+
+
+class AdminTagTest(TestCase):
+
+    def test_admin_object_tag(self):
+        """ Test for tag that return link to edit admin"""
+        self.response = self.client.get(reverse('about_me'))
+        self.assertIn('(admin)', self.response.content)
+        self.assertIn('<a href="/admin/bio/person/1/"', self.response.content)
+
+

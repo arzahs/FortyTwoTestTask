@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from apps.bio.models import Person
 from apps.bio.models import Request
 from apps.bio.forms import EditPersonForm
+from apps.bio.templatetags.edit_link import edit_link
 # Create your tests here.
 
 
@@ -177,8 +178,19 @@ class AdminTagTest(TestCase):
 
     def test_admin_object_tag(self):
         """ Test for tag that return link to edit admin"""
-        self.response = self.client.get(reverse('about_me'))
-        self.assertIn('(admin)', self.response.content)
-        self.assertIn('<a href="/admin/bio/person/1/"', self.response.content)
+
+        person, _ = Person.objects.get_or_create(
+            pk=1,
+            name="Sergey",
+            last_name="Nelepa",
+            contacts="+380664290126",
+            birthday=date(1995, 07, 11),
+            bio='Test data',
+            email='nelepa1995@mail.ru',
+            jabber='arzahs@jabber.ru',
+            skype='skype',
+            other_contacts='Test data',
+        )
+        self.assertEqual('<a href="/admin/bio/person/1/">admin</a>', edit_link(person))
 
 

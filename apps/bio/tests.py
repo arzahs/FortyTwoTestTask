@@ -6,6 +6,8 @@ from apps.bio.models import Person
 from apps.bio.models import Request
 from apps.bio.forms import EditPersonForm
 from apps.bio.templatetags.edit_link import edit_link
+from django.core.management import call_command
+from django.utils.six import StringIO
 # Create your tests here.
 
 
@@ -193,4 +195,14 @@ class AdminTagTest(TestCase):
         )
         self.assertEqual('<a href="/admin/bio/person/1/">admin</a>', edit_link(person))
 
+
+class CommandTest(TestCase):
+
+    def test_print_models_command(self):
+        """ Test for command, that print count objects from all object"""
+        out = StringIO()
+        call_command('print_models', stdout=out)
+        result = out.getvalue()
+        self.assertTrue(result)
+        self.assertIn('Model person count objects: 0', result)
 

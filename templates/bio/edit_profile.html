@@ -52,6 +52,8 @@
          <div class="left">
             Photo: <p>
              {{ form.photo }}
+             <button id="cancel_load" style="display: none;">Cancel load photo</button>
+             <br>
              <img id="photo" src="" style="display: none;">
 
          </p>
@@ -75,7 +77,8 @@
         </div>
         <p id="status_save">Saving data...</p>
         <p id="status_load">Loading data...</p>
-        <p id="status_error">Error, repeat late.</p>
+        <p id="status_error">Error, repeat late. Errors list:</p>
+        <p id="error_list"></p>
         <p id="status_success" style="display: none;">Changes have been saved</p>
         <input type="submit" value="Save">
         <a href="{% url 'about_me' %}">Сancel</a>

@@ -204,5 +204,5 @@ class CommandTest(TestCase):
         call_command('print_models', stdout=out)
         result = out.getvalue()
         self.assertTrue(result)
-        self.assertIn('Model person count objects: 0', result)
+        self.assertIn('Model bio_person count objects: 0', result)
 

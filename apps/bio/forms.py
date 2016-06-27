@@ -15,7 +15,9 @@ class EditPersonForm(ModelForm):
 
     def clean(self):
         cleaned_data = super(EditPersonForm, self).clean()
-        date = cleaned_data['birthday']
-        if date > datetime.date.today():
+        date = cleaned_data.get("birthday")
+        if date is None:
+            raise ValidationError("Birthday date not correct!")
+        elif date > datetime.date.today():
             raise ValidationError("The date cannot be in the future!")
         return cleaned_data

@@ -95,7 +95,8 @@ class EditPersonView(FormView):
                 for error in form.errors:
                     e = form.errors[error]
                     errors_dict[error] = e
-            return HttpResponseBadRequest(json.dumps({'errors': errors_dict, 'result': 'error'}))
+            return HttpResponseBadRequest(json.dumps({'errors': errors_dict,
+                                                      'result': 'error'}))
         if person.photo:
             path = os.path.join(settings.BASE_DIR, person.photo.path)
             img = Image.open(path)

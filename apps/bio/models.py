@@ -36,3 +36,11 @@ class Request(models.Model):
     class Meta:
         verbose_name = u"Request"
         verbose_name_plural = u"Requests"
+
+class ChangesEntry(models.Model):
+    name = models.CharField(max_length=250)
+    action = models.CharField(max_length=20)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return u'{0} {1} {2}'.format(self.name, self.action, self.date)

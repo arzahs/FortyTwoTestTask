@@ -212,10 +212,10 @@ class CommandTest(TestCase):
 class EntryChangesTest(TestCase):
 
     def test_model(self):
-        entry, _ = ChangesEntry.object.get_or_create(
+        entry, _ = ChangesEntry.objects.get_or_create(
             name='Name',
             action='create'
         )
 
         self.assertEqual(entry.__str__(),
-                         u"{0} {1}".format(entry.name, entry.action))
+                         u"{0} {1} {2}".format(entry.name, entry.action, entry.date))

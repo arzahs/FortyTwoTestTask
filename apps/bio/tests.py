@@ -219,3 +219,60 @@ class EntryChangesTest(TestCase):
 
         self.assertEqual(entry.__str__(),
                          u"{0} {1} {2}".format(entry.name, entry.action, entry.date))
+
+    def test_creation_object(self):
+        ChangesEntry.objects.all().delete()
+        self.assertEqual(ChangesEntry.objects.all().count(), 0)
+        person = Person.objects.create(
+            name="Sergey",
+            last_name="Nelepa",
+            contacts="+380664290126",
+            birthday=date(1995, 07, 11),
+            bio='Test data',
+            email='nelepa1995@mail.ru',
+            jabber='arzahs@jabber.ru',
+            skype='skype',
+            other_contacts='Test data',
+        )
+        self.assertEqual(ChangesEntry.objects.all().count(), 1)
+
+    def test_update_object(self):
+        person = Person.objects.create(
+            pk=1,
+            name="Sergey",
+            last_name="Nelepa",
+            contacts="+380664290126",
+            birthday=date(1995, 07, 11),
+            bio='Test data',
+            email='nelepa1995@mail.ru',
+            jabber='arzahs@jabber.ru',
+            skype='skype',
+            other_contacts='Test data',
+        )
+        ChangesEntry.objects.all().delete()
+        self.assertEqual(ChangesEntry.objects.all().count(), 0)
+        person = Person.objects.get(pk=1)
+        person.name = "Test"
+        person.save()
+        self.assertEqual(ChangesEntry.objects.all().count(), 1)
+        self.assertEqual(ChangesEntry.objects.get(pk=1).action, u'update')
+
+
+    def test_delete_object(self):
+        person = Person.objects.create(
+            pk=1,
+            name="Sergey",
+            last_name="Nelepa",
+            contacts="+380664290126",
+            birthday=date(1995, 07, 11),
+            bio='Test data',
+            email='nelepa1995@mail.ru',
+            jabber='arzahs@jabber.ru',
+            skype='skype',
+            other_contacts='Test data',
+        )
+        ChangesEntry.objects.all().delete()
+        self.assertEqual(ChangesEntry.objects.all().count(), 0)
+        person.delete()
+        self.assertEqual(ChangesEntry.objects.all().count(), 1)
+        self.assertEqual(ChangesEntry.objects.get(pk=1).action, u'delete')

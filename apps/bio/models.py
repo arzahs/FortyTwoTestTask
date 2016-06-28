@@ -37,6 +37,7 @@ class Request(models.Model):
         verbose_name = u"Request"
         verbose_name_plural = u"Requests"
 
+
 class ChangesEntry(models.Model):
     name = models.CharField(max_length=250)
     action = models.CharField(max_length=20)

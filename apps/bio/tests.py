@@ -2,12 +2,12 @@
 from datetime import date
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from apps.bio.models import Person
-from apps.bio.models import Request
-from apps.bio.forms import EditPersonForm
-from apps.bio.templatetags.edit_link import edit_link
 from django.core.management import call_command
 from django.utils.six import StringIO
+from apps.bio.models import Person
+from apps.bio.models import Request, ChangesEntry
+from apps.bio.forms import EditPersonForm
+from apps.bio.templatetags.edit_link import edit_link
 # Create your tests here.
 
 
@@ -193,7 +193,9 @@ class AdminTagTest(TestCase):
             skype='skype',
             other_contacts='Test data',
         )
-        self.assertEqual('<a href="/admin/bio/person/1/">admin</a>', edit_link(person))
+        self.assertEqual(
+            '<a href="/admin/bio/person/1/">admin</a>',
+            edit_link(person))
 
 
 class CommandTest(TestCase):
@@ -206,3 +208,14 @@ class CommandTest(TestCase):
         self.assertTrue(result)
         self.assertIn('Model bio_person count objects: 0', result)
 
+
+class EntryChangesTest(TestCase):
+
+    def test_model(self):
+        entry, _ = ChangesEntry.object.get_or_create(
+            name='Name',
+            action='create'
+        )
+
+        self.assertEqual(entry.__str__(),
+                         u"{0} {1}".format(entry.name, entry.action))

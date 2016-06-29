@@ -2,9 +2,12 @@
 from datetime import date
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from django.core.management import call_command
+from django.utils.six import StringIO
 from apps.bio.models import Person
-from apps.bio.models import Request
+from apps.bio.models import Request, ChangesEntry
 from apps.bio.forms import EditPersonForm
+from apps.bio.templatetags.edit_link import edit_link
 # Create your tests here.
 
 
@@ -171,3 +174,120 @@ class EditFormTest(TestCase):
             'other_contacts': 'Test data',
         })
         self.assertTrue(form.is_valid())
+
+
+class AdminTagTest(TestCase):
+
+    def test_admin_object_tag(self):
+        """ Test for tag that return link to edit admin"""
+
+        person, _ = Person.objects.get_or_create(
+            pk=1,
+            name="Sergey",
+            last_name="Nelepa",
+            contacts="+380664290126",
+            birthday=date(1995, 07, 11),
+            bio='Test data',
+            email='nelepa1995@mail.ru',
+            jabber='arzahs@jabber.ru',
+            skype='skype',
+            other_contacts='Test data',
+        )
+        self.assertEqual(
+            '<a href="/admin/bio/person/1/">admin</a>',
+            edit_link(person))
+
+
+class CommandTest(TestCase):
+
+    def test_print_models_command(self):
+        """ Test for command, that print count objects from all object"""
+        out = StringIO()
+        call_command('print_models', stdout=out)
+        result = out.getvalue()
+        self.assertTrue(result)
+        self.assertIn('Model Person count objects: 0', result)
+
+
+class EntryChangesTest(TestCase):
+
+    def test_model(self):
+        """ Test for model ChangesEntry """
+        entry, _ = ChangesEntry.objects.get_or_create(
+            name='Name',
+            action='create'
+        )
+
+        self.assertEqual(entry.__str__(),
+                         u"{0} {1} {2}".format(entry.name,
+                                               entry.action,
+                                               entry.date))
+
+    def test_creation_object(self):
+        """
+        Test for signal that create
+        entry about create in ChangesEntry
+        """
+        ChangesEntry.objects.all().delete()
+        self.assertEqual(ChangesEntry.objects.all().count(), 0)
+        Person.objects.create(
+            name="Sergey",
+            last_name="Nelepa",
+            contacts="+380664290126",
+            birthday=date(1995, 07, 11),
+            bio='Test data',
+            email='nelepa1995@mail.ru',
+            jabber='arzahs@jabber.ru',
+            skype='skype',
+            other_contacts='Test data',
+        )
+
+        self.assertEqual(ChangesEntry.objects.all().count(), 1)
+
+    def test_update_object(self):
+        """
+        Test for signal that create
+        entry about update object in ChangesEntry
+        """
+        Person.objects.create(
+            pk=1,
+            name="Sergey",
+            last_name="Nelepa",
+            contacts="+380664290126",
+            birthday=date(1995, 07, 11),
+            bio='Test data',
+            email='nelepa1995@mail.ru',
+            jabber='arzahs@jabber.ru',
+            skype='skype',
+            other_contacts='Test data',
+        )
+        ChangesEntry.objects.all().delete()
+        self.assertEqual(ChangesEntry.objects.all().count(), 0)
+        person = Person.objects.get(pk=1)
+        person.name = "Test"
+        person.save()
+        self.assertEqual(ChangesEntry.objects.all().count(), 1)
+        self.assertEqual(ChangesEntry.objects.get(pk=1).action, u'update')
+
+    def test_delete_object(self):
+        """
+        Test for signal that create
+        entry about deleting object in ChangesEntry
+        """
+        person = Person.objects.create(
+            pk=1,
+            name="Sergey",
+            last_name="Nelepa",
+            contacts="+380664290126",
+            birthday=date(1995, 07, 11),
+            bio='Test data',
+            email='nelepa1995@mail.ru',
+            jabber='arzahs@jabber.ru',
+            skype='skype',
+            other_contacts='Test data',
+        )
+        ChangesEntry.objects.all().delete()
+        self.assertEqual(ChangesEntry.objects.all().count(), 0)
+        person.delete()
+        self.assertEqual(ChangesEntry.objects.all().count(), 1)
+        self.assertEqual(ChangesEntry.objects.get(pk=1).action, u'delete')

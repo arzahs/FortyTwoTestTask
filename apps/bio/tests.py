@@ -206,24 +206,31 @@ class CommandTest(TestCase):
         call_command('print_models', stdout=out)
         result = out.getvalue()
         self.assertTrue(result)
-        self.assertIn('Model bio_person count objects: 0', result)
+        self.assertIn('Model Person count objects: 0', result)
 
 
 class EntryChangesTest(TestCase):
 
     def test_model(self):
+        """ Test for model ChangesEntry """
         entry, _ = ChangesEntry.objects.get_or_create(
             name='Name',
             action='create'
         )
 
         self.assertEqual(entry.__str__(),
-                         u"{0} {1} {2}".format(entry.name, entry.action, entry.date))
+                         u"{0} {1} {2}".format(entry.name,
+                                               entry.action,
+                                               entry.date))
 
     def test_creation_object(self):
+        """
+        Test for signal that create
+        entry about create in ChangesEntry
+        """
         ChangesEntry.objects.all().delete()
         self.assertEqual(ChangesEntry.objects.all().count(), 0)
-        person = Person.objects.create(
+        Person.objects.create(
             name="Sergey",
             last_name="Nelepa",
             contacts="+380664290126",
@@ -234,10 +241,15 @@ class EntryChangesTest(TestCase):
             skype='skype',
             other_contacts='Test data',
         )
+
         self.assertEqual(ChangesEntry.objects.all().count(), 1)
 
     def test_update_object(self):
-        person = Person.objects.create(
+        """
+        Test for signal that create
+        entry about update object in ChangesEntry
+        """
+        Person.objects.create(
             pk=1,
             name="Sergey",
             last_name="Nelepa",
@@ -257,8 +269,11 @@ class EntryChangesTest(TestCase):
         self.assertEqual(ChangesEntry.objects.all().count(), 1)
         self.assertEqual(ChangesEntry.objects.get(pk=1).action, u'update')
 
-
     def test_delete_object(self):
+        """
+        Test for signal that create
+        entry about deleting object in ChangesEntry
+        """
         person = Person.objects.create(
             pk=1,
             name="Sergey",

@@ -9,9 +9,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for model in get_models():
             str = "Model {0} count objects: {1}".format(
-                model._meta.db_table, model.objects.count()
+                model.__name__, model.objects.count()
             )
             self.stdout.write(str)
-            self.stderr.write(
-                str
-            )
+            self.stderr.write("error: "+str)

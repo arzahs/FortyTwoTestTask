@@ -45,3 +45,7 @@ class ChangesEntry(models.Model):
 
     def __str__(self):
         return u'{0} {1} {2}'.format(self.name, self.action, self.date)
+
+    class Meta:
+        verbose_name = u"Entry about changes"
+        verbose_name_plural = u"Entries about changes"

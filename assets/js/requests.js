@@ -1,7 +1,7 @@
 var id = 0;
 var newRequest = 0;
 setInterval(function(){
-    var list_item =$('ul>li')[0];
+    var list_item =$('table tr')[0];
     id = $(list_item).data('id');
     $.ajax({
         type: 'GET',
@@ -12,7 +12,8 @@ setInterval(function(){
         if (!response || !response.length) {
             return false;
         }
-            handlerMessages(response);
+        handlerMessages(response);
+
     });
 }, 5000);
 
@@ -22,15 +23,13 @@ var handlerMessages = function(data){
     document.title = newRequest + " new requests";
     $('h2').text(newRequest + " new requests");
     $.each(requests, function(i, item){
-        var listItemString = "<li data-id='"+requests[i].pk+"'>"+requests[i].fields.method+" "+requests[i].fields.path+" "+requests[i].fields.status_code+" "+requests[i].fields.server_protocol+" "+requests[i].fields.content_len+"</li>"
-        $('ul').prepend(listItemString);
-        if($('ul li').length > 10){
-            $('ul li:last-child').remove();
+        var listItemString = "<tr data-id='"+requests[i].pk+"'><td>"+requests[i].fields.method+" "+requests[i].fields.path+" "+requests[i].fields.status_code+" "+requests[i].fields.server_protocol+" "+requests[i].fields.content_len+"</td>"+ "<td>priority:<input class='priority' type='text' value='"+requests[i].fields.priority+"'></td>"+"</tr>";
+        $('table').prepend(listItemString);
+        if($('table tr').length > 10){
+            $('table tr:last-child').remove();
         }
     });
 
 };
 
-$("li select").on('change', function(){
-    
-});
+

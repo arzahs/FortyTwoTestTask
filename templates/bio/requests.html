@@ -11,14 +11,23 @@
 
 {% block content %}
     <a href="{% url "about_me" %}">Main page</a>
+    <br>
+    <label for="sort">Sort by:</label>
+    <select id="sort">
+        <option value="0">None</option>
+        <option value="1">Max priority</option>
+        <option value="2">Min priority</option>
+    </select>
+    <br>
     <div class="row">
     <h2>0 new requests</h2>
-        <ul>
+        <table>
 
             {% for request in requests %}
-                <li data-id="{{ request.id }}">{{ request.method }} {{ request.path }} {{ request.status_code }} {{ request.server_protocol }} {{ request.content_len }} {#priority: {{ request.priority }} new priority: {{ form.priority }}#}</li>
+                <tr data-id="{{ request.id }}"><td>{{ request.method }} {{ request.path }} {{ request.status_code }} {{ request.server_protocol }} {{ request.content_len }}</td>
+                    <td>priority:<input class='priority' type="text" value="{{ request.priority|default_if_none:'0' }}"></td></tr>
             {% endfor %}
-        </ul>
+        </table>
     </div>
 
 {% endblock %}

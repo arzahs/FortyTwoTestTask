@@ -10,20 +10,21 @@
 
 
 {% block content %}
+    <input type="hidden" id="csrf" value="{{ csrf }}">
     <a href="{% url "about_me" %}">Main page</a>
     <br>
     <label for="sort">Sort by:</label>
     <select id="sort">
-        <option value="0">None</option>
-        <option value="1">Max priority</option>
-        <option value="2">Min priority</option>
+        <option value="">None</option>
+        <option value="desc">Max priority</option>
+        <option value="asc">Min priority</option>
     </select>
     <br>
     <div class="row">
     <h2>0 new requests</h2>
         <table>
         <thead>
-         <tr><td>Type</td><td>Path</td><td>Status</td><td>Protocol</td><td>Contetn length</td>
+         <tr><td>Type</td><td>Path</td><td>Status</td><td>Protocol</td><td>Content length</td>
                     <td><input class='priority' style="display: none;" type="text" value=""> <span class="prior-text"> Priority </span>
                     </td>
          </tr>
@@ -32,7 +33,7 @@
         <tbody>
             {% for request in requests %}
                 <tr data-id="{{ request.id }}"><td>{{ request.method }}</td><td>{{ request.path }}</td><td>{{ request.status_code }}</td><td>{{ request.server_protocol }}</td><td>{{ request.content_len }}</td>
-                    <td><input class='priority' type="text" value="{{ request.priority|default_if_none:'1' }}"> <span class="pior-text">{{ request.priority|default_if_none:'1' }} 1 </span></td></tr>
+                    <td><input class='priority' type="text" value="{{ request.priority }}"> <span class="prior-text">{{ request.priority }}</span></td></tr>
             {% endfor %}
         </tbody>
         </table>

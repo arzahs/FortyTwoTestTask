@@ -125,6 +125,22 @@ class RequestTest(TestCase):
         self.assertIn(req.server_protocol, self.response.content)
         self.assertIn(req.content_len, self.response.content)
 
+    def test_request_priority(self):
+        """ Test for RequestList view that changes priority request"""
+        req, _ = Request.objects.get_or_create(
+            id=3,
+            method='GET',
+            path='/',
+            status_code='200',
+            server_protocol='http',
+            content_len='1123'
+        )
+        self.assertEqual(req.priority, 0)
+        self.response = self.client.post(reverse('requests_list'), {
+            'id': '3',
+            'priority': '3'})
+        self.assertEqual(req.priority, 3)
+
 
 class EditFormTest(TestCase):
 

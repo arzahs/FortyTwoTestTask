@@ -36,18 +36,38 @@ var handlerMessages = function(data){
 $(document).ready(function () {
     $('body').on('click', 'tr td:last-child', function(event) {
        var $text = $(this).children('span');
-        var priority = $text.text();
+        var priority = parseInt($text.text());
         $text.hide();
         $(this).children('input').val(priority).show();
         });
 
     $('body').on('keyup', '.priority', function(event) {
+        $(this).val($(this).val().replace(/[^+0-9]/gim,''));
         if(event.which == 13){
-            var value = $(this).val();
-            $(this).hide();
-            console.log(value);
-            console.log($(this).parent().children('span').text());
-            $(this).parent().children('span').text(value).show();
+            var value = parseInt($(this).val());
+            if(isNaN(value)){
+                alert('Input error!');
+            }else{
+                $(this).hide();
+                $(this).parent().children('span').text(value).show();
+                var tr = $(this).closest('tr');
+                var id = $(tr).data('id');
+                console.log(id);
+                $.ajax({
+                    type: 'POST',
+                    url: '/requests_list',
+                    data: {id: id, priority: value},
+                    dataType: 'json'
+                }).success(function(response){
+                    if (!response || !response.length) {
+                        return false;
+                    }
+                    //sortItems
+
+                });
+            }
+
+
         }
     });
 });

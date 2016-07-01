@@ -69,13 +69,24 @@ class RequestList(View):
                 data = serializers.serialize('json', requests)
                 data = json.loads(data)
                 requests = json.dumps(data)
-                print requests
                 return HttpResponse(requests, mimetype="application/json")
             return HttpResponse({}, mimetype="application/json")
         else:
             requests = Request.objects.all().order_by('-date')[:10]
 
         return render_to_response("bio/requests.html", {"requests": requests})
+
+    def post(self, request, *args, **kwargs):
+        if request.POST.get('id') and request.POST.get('priority'):
+            request_id = request.POST.get('id')
+            req = Request.objects.get(id=request_id)
+            req.priority = int(request.POST.get('priority'))
+            req.save()
+            return HttpResponse({'status': 'ok'}, mimetype="application/json")
+
+        return HttpResponseBadRequest(json.dumps({'status': 'error'}))
+
+
 
 
 class EditPersonView(FormView):

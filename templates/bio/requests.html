@@ -16,7 +16,7 @@
         <ul>
 
             {% for request in requests %}
-                <li data-id="{{ request.id }}">{{ request.method }} {{ request.path }} {{ request.status_code }} {{ request.server_protocol }} {{ request.content_len }} priority: {{ request.priority }} new priority: {{ form.priority }}</li>
+                <li data-id="{{ request.id }}">{{ request.method }} {{ request.path }} {{ request.status_code }} {{ request.server_protocol }} {{ request.content_len }} {#priority: {{ request.priority }} new priority: {{ form.priority }}#}</li>
             {% endfor %}
         </ul>
     </div>

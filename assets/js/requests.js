@@ -30,3 +30,7 @@ var handlerMessages = function(data){
     });
 
 };
+
+$("li select").on('change', function(){
+    
+});

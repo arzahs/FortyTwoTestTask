@@ -22,16 +22,23 @@
     <div class="row">
     <h2>0 new requests</h2>
         <table>
+        <thead>
+         <tr><td>Type</td><td>Path</td><td>Status</td><td>Protocol</td><td>Contetn length</td>
+                    <td><input class='priority' style="display: none;" type="text" value=""> <span class="prior-text"> Priority </span>
+                    </td>
+         </tr>
 
+        </thead>
+        <tbody>
             {% for request in requests %}
-                <tr data-id="{{ request.id }}"><td>{{ request.method }} {{ request.path }} {{ request.status_code }} {{ request.server_protocol }} {{ request.content_len }}</td>
-                    <td>priority:<input class='priority' type="text" value="{{ request.priority|default_if_none:'0' }}"></td></tr>
+                <tr data-id="{{ request.id }}"><td>{{ request.method }}</td><td>{{ request.path }}</td><td>{{ request.status_code }}</td><td>{{ request.server_protocol }}</td><td>{{ request.content_len }}</td>
+                    <td><input class='priority' type="text" value="{{ request.priority|default_if_none:'1' }}"> <span class="pior-text">{{ request.priority|default_if_none:'1' }} 1 </span></td></tr>
             {% endfor %}
+        </tbody>
         </table>
     </div>
 
 {% endblock %}
-
 {% block scripts %}
     {{ block.super }}
     <script src="{% static 'js/requests.js' %}"></script>

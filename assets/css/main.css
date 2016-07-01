@@ -39,6 +39,18 @@ img{
 }
 .priority{
     width: 20px;
+    display: none;
 
 }
 
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+tr td:last-child{
+    width: 60px;
+}

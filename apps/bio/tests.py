@@ -91,19 +91,26 @@ class RequestTest(TestCase):
         """Test middleware that save request in DB"""
         requests = Request.objects.all()
         self.assertEqual(requests.count(), 0)
-        self.response = self.client.get(reverse('requests_list'))
+        self.client.get(reverse('requests_list'))
         requests = Request.objects.all()
         self.assertEqual(requests.count(), 0)
-        self.response = self.client.get(reverse('about_me'))
+        self.client.get(reverse('about_me'))
         requests = Request.objects.all()
         self.assertEqual(requests.count(), 1)
-        self.response = self.client.get(reverse('about_me'))
+        self.client.get(reverse('about_me'))
         requests = Request.objects.all()
         self.assertEqual(requests.count(), 2)
 
     def test_view_requests(self):
         """Test for view, that use model Request"""
-        self.response = self.client.get(reverse('about_me'))
+        req, _ = Request.objects.get_or_create(
+            id=1,
+            method='GET',
+            path='/test/',
+            status_code='200',
+            server_protocol='http',
+            content_len='1200'
+        )
         self.response = self.client.get(reverse('requests_list'))
         self.assertIn('requests', self.response.context)
         self.assertIn('200', self.response.content)

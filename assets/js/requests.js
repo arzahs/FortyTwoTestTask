@@ -4,27 +4,32 @@ var type_sort = '';
 
 function sortTable($table, order){
     if(order !== ''){
-        var $rows = $('tbody tr', $table);
+        var $rows = $('tbody tr').get();
         $rows.sort(function (a, b) {
-        var keyA = $('.priority', a).val();
-        var keyB = $('.priority', b).val();
-        if (order=='asc') {
-            return (keyA > keyB) ? 1 : 0;
-        } else {
-            return (keyA > keyB) ? 0 : 1;
-        }
-    });
-    $.each($rows, function (index, row) {
-        $table.append(row);
-    });
+            var keyA = parseInt($('.prior-text', a).eq(0).text());
+            var keyB = parseInt($('.prior-text', b).eq(0).text());
+            if (order == "asc") {
+                return (keyA > keyB) ? 1 : 0;
+            } else {
+                return (keyA > keyB) ? 0 : 1;
+            }
+        });
+        $.each($rows, function (index, row) {
+            $table.append(row);
+        });
     }
 
 
-};
+}
 
 setInterval(function(){
-    var list_item =$('tbody tr')[0];
-    id = $(list_item).data('id');
+    var maxId = 0
+    $('tbody tr').each(function() {
+
+        if(maxId < $(this).data("id")){ maxId = $(this).data("id")}
+
+    });
+    var id = maxId;
     $.ajax({
         type: 'GET',
         url: '/requests_list',
@@ -47,16 +52,13 @@ var handlerMessages = function(data){
     document.title = newRequest + " new requests";
     $('h2').text(newRequest + " new requests");
     $.each(requests, function(i, item){
-        var listItemString = "<tr data-id='"+requests[i].pk+"'><td>"+requests[i].fields.method+"</td><td>"+requests[i].fields.path+"</td><td>"+requests[i].fields.status_code+"</td><td>"+requests[i].fields.server_protocol+"</td><td>"+requests[i].fields.content_len+"</td>"+ "<td><input class='priority' type='text' value='1'><span class='pior-text'> 1 </span></td>"+"</tr>";
+        var listItemString = "<tr data-id='"+requests[i].pk+"'><td>"+requests[i].fields.method+"</td><td>"+requests[i].fields.path+"</td><td>"+requests[i].fields.status_code+"</td><td>"+requests[i].fields.server_protocol+"</td><td>"+requests[i].fields.content_len+"</td>"+ "<td><input class='priority' type='text' value='"+requests[i].fields.priority+"'><span class='prior-text'>"+requests[i].fields.priority+"</span></td>"+"</tr>";
         $('table').prepend(listItemString);
         if($('tbody tr').length > 10){
             $('tbody tr:last-child').remove();
         }
     });
-    if(type_sort !== ''){
-        sortTable($('table'), type_sort);
-    }
-
+    sortTable($('table'), type_sort);
 };
 
 
@@ -84,20 +86,19 @@ $(document).ready(function () {
                 $(this).parent().children('span').text(value).show();
                 var tr = $(this).closest('tr');
                 var id = $(tr).data('id');
-                console.log(id);
+                var csrf = $('#csrf').val();
+                sortTable($(this).closest('table'), type_sort);
                 $.ajax({
                     type: 'POST',
-                    url: '/requests_list',
-                    data: {id: id, priority: value},
+                    url: '/requests_list/',
+                    data: {id: id, priority: value, csrfmiddlewaretoken: csrf},
                     dataType: 'json'
                 }).success(function(response){
                     if (!response || !response.length) {
                         return false;
                     }
-                    
-                    sortTable($('table'), type_sort);
-
                 });
+
             }
 
 

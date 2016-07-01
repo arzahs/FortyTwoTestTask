@@ -29,6 +29,7 @@ class Request(models.Model):
     server_protocol = models.CharField(max_length=3)
     content_len = models.IntegerField()
     date = models.DateTimeField(auto_now_add=True)
+    priority = models.IntegerField(default=0)
 
     def __str__(self):
         return u"{0} {1} {2}".format(self.method, self.path, self.date)

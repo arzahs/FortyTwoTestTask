@@ -74,7 +74,9 @@ class RequestList(View):
         else:
             requests = Request.objects.all().order_by('-date')[:10]
 
-        return render_to_response("bio/requests.html", {"requests": requests})
+        csrf = request.COOKIES.get('csrftoken')
+        return render_to_response("bio/requests.html", {"requests": requests,
+                                                        'csrf': csrf})
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('id') and request.POST.get('priority'):
@@ -85,8 +87,6 @@ class RequestList(View):
             return HttpResponse({'status': 'ok'}, mimetype="application/json")
 
         return HttpResponseBadRequest(json.dumps({'status': 'error'}))
-
-
 
 
 class EditPersonView(FormView):

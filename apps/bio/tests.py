@@ -136,10 +136,13 @@ class RequestTest(TestCase):
             content_len='1123'
         )
         self.assertEqual(req.priority, 0)
+
         self.response = self.client.post(reverse('requests_list'), {
             'id': '3',
-            'priority': '3'})
-        self.assertEqual(req.priority, 3)
+            'priority': '3'
+        })
+        request = Request.objects.get(id=3)
+        self.assertEqual(request.priority, 3)
 
 
 class EditFormTest(TestCase):

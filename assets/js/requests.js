@@ -78,16 +78,27 @@ $(document).ready(function () {
     $('body').on('keyup', '.priority', function(event) {
         $(this).val($(this).val().replace(/[^+0-9]/gim,''));
         if(event.which == 13){
-            var value = parseInt($(this).val());
+            sendPriority(this);
+        }
+    });
+
+    $('body').on('focusout', '.priority', function(event) {
+            sendPriority(this);
+    });
+
+});
+
+function sendPriority(elm) {
+    var value = parseInt($(elm).val());
             if(isNaN(value)){
                 alert('Input error!');
             }else{
-                $(this).hide();
-                $(this).parent().children('span').text(value).show();
-                var tr = $(this).closest('tr');
+                $(elm).hide();
+                $(elm).parent().children('span').text(value).show();
+                var tr = $(elm).closest('tr');
                 var id = $(tr).data('id');
                 var csrf = $('#csrf').val();
-                sortTable($(this).closest('table'), type_sort);
+                sortTable($(elm).closest('table'), type_sort);
                 $.ajax({
                     type: 'POST',
                     url: '/requests_list/',
@@ -100,9 +111,5 @@ $(document).ready(function () {
                 });
 
             }
-
-
-        }
-    });
-});
+}
 

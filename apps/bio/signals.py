@@ -7,10 +7,15 @@ from apps.bio.models import ChangesEntry
 @receiver(post_save)
 def post_save_signal(sender, created, **kwargs):
     if sender.__name__ != 'ChangesEntry':
-        if not created:
-            ChangesEntry.objects.create(name=sender.__name__, action='update')
-        else:
-            ChangesEntry.objects.create(name=sender.__name__, action='create')
+        try:
+            if not created:
+                ChangesEntry.objects.create(name=sender.__name__,
+                                            action='update')
+            else:
+                ChangesEntry.objects.create(name=sender.__name__,
+                                            action='create')
+        except:
+            pass
 
     return 0
 

@@ -64,7 +64,12 @@ class RequestList(View):
     def get(self, request, *args, **kwargs):
         if request.GET.get('id'):
             last_id = int(request.GET.get('id'))
-            requests = Request.objects.filter(id__gt=last_id)
+            if not request.GET.get('priority'):
+                requests = Request.objects.filter(id__gt=last_id)
+            elif request.GET.get('priority') == 'desc':
+                requests = Request.objects.order_by('-priority')[:10]
+            elif request.GET.get('priority') == 'asc':
+                requests = Request.objects.order_by('priority')[:10]
             if requests.count() > 0:
                 data = serializers.serialize('json', requests)
                 data = json.loads(data)

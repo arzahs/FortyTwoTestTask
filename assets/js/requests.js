@@ -83,6 +83,7 @@ $(document).ready(function () {
     });
 
     $('body').on('focusout', '.priority', function(event) {
+            event.preventDefault();
             sendPriority(this);
     });
 

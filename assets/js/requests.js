@@ -2,6 +2,7 @@ var id = 0;
 var newRequest = 0;
 var type_sort = '';
 var order_load = 1;
+var inputPriority = false;
 
 function sortTable($table, order){
     if(order !== ''){
@@ -40,7 +41,8 @@ setInterval(function(){
         if (!response || !response.length) {
             return false;
         }
-        if(type_sort == '' || order_load < 1){
+        var table_len = $('tbody tr').length;
+        if((type_sort == '' || (type_sort !== '' && table_len < 10) || order_load < 1) && inputPriority === false){
             handlerMessages(response);
             if(type_sort !== ''){
                 order_load++;
@@ -57,6 +59,17 @@ setInterval(function(){
 
 var handlerMessages = function(data){
     var requests = jQuery.parseJSON(JSON.stringify(data));
+    if(type_sort !== ''){
+        var len = $('tbody tr').length;
+        if(len < requests.length){
+            var count = requests.length - len;
+            newRequest += count;
+            document.title = newRequest + " new requests";
+            $('h2').text(newRequest + " new requests");
+        }
+        $('tbody tr').remove();
+    }
+
     if(type_sort === ''){
         newRequest += requests.length;
         document.title = newRequest + " new requests";
@@ -79,6 +92,7 @@ $(document).ready(function () {
         var priority = parseInt($text.text());
         $text.hide();
         $(this).children('input').val(priority).show();
+        inputPriority = true;
         });
 
     $('#sort').on('change', function () {
@@ -86,7 +100,9 @@ $(document).ready(function () {
         order_load = 0;
         $('.alert').show();
         $('.alert').text('Sorting...Wait one second!');
-        // sortTable($('table'), type_sort);
+        if(type_sort == ''){
+            location.reload(true);
+        }
     });
 
     $('body').on('keyup', '.priority', function(event) {
@@ -115,6 +131,7 @@ function sendPriority(elm) {
                 var csrf = $('#csrf').val();
                 sortTable($(elm).closest('table'), type_sort);
                 order_load = 0;
+                inputPriority = false;
                 if(type_sort !== ''){
                     $('.alert').show();
                     $('.alert').text('Sorting...Wait one second!');

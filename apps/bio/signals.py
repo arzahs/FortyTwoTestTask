@@ -1,21 +1,20 @@
 # coding: utf-8
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
+from django.db import connection
 from apps.bio.models import ChangesEntry
 
 
 @receiver(post_save)
 def post_save_signal(sender, created, **kwargs):
-    if sender.__name__ != 'ChangesEntry':
-        try:
+    tables = connection.introspection.table_names()
+    if sender.__name__ != 'ChangesEntry' and 'bio_changesentry' in tables:
             if not created:
                 ChangesEntry.objects.create(name=sender.__name__,
                                             action='update')
             else:
                 ChangesEntry.objects.create(name=sender.__name__,
                                             action='create')
-        except:
-            pass
 
     return 0
 

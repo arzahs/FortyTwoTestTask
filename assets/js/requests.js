@@ -3,6 +3,7 @@ var newRequest = 0;
 var type_sort = '';
 var order_load = 1;
 var inputPriority = false;
+var lastPriority = 0;
 
 function sortTable($table, order){
     if(order !== ''){
@@ -88,12 +89,20 @@ var handlerMessages = function(data){
 
 $(document).ready(function () {
     $('body').on('click', 'tr td:last-child', function(event) {
+        $('tr td:last-child').each(function(item, i){
+            var elm = $(i).children('.priority');
+
+            if ($(event.target).closest($(this)).length === 0 && $(elm).css('display') === 'inline-block'){
+                sendPriority(elm);
+            }
+        });
        var $text = $(this).children('span');
         var priority = parseInt($text.text());
         $text.hide();
         $(this).children('input').val(priority).show();
         inputPriority = true;
-        });
+        lastPriority = priority;
+    });
 
     $('#sort').on('change', function () {
         type_sort = $(this).val();
@@ -121,9 +130,10 @@ $(document).ready(function () {
 
 function sendPriority(elm) {
     var value = parseInt($(elm).val());
-            if(isNaN(value)){
-                alert('Input error!');
-            }else{
+        if(isNaN(value)){
+                value = lastPriority;
+            }
+
                 $(elm).hide();
                 $(elm).parent().children('span').text(value).show();
                 var tr = $(elm).closest('tr');
@@ -147,6 +157,5 @@ function sendPriority(elm) {
                     }
                 });
 
-            }
 }
 

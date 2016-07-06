@@ -47,7 +47,9 @@ setInterval(function(){
             }
 
         }
+        $('.alert').hide();
         $('.alert').text('');
+
 
 
     });
@@ -82,6 +84,7 @@ $(document).ready(function () {
     $('#sort').on('change', function () {
         type_sort = $(this).val();
         order_load = 0;
+        $('.alert').show();
         $('.alert').text('Sorting...Wait one second!');
         // sortTable($('table'), type_sort);
     });
@@ -113,6 +116,7 @@ function sendPriority(elm) {
                 sortTable($(elm).closest('table'), type_sort);
                 order_load = 0;
                 if(type_sort !== ''){
+                    $('.alert').show();
                     $('.alert').text('Sorting...Wait one second!');
                 }
                 $.ajax({

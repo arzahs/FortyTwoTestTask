@@ -9,8 +9,10 @@ class EditPersonForm(ModelForm):
         model = Person
 
         widgets = {
-            'bio': widgets.Textarea(),
-            'other_contacts': widgets.Textarea()
+            'bio': widgets.Textarea(attrs={'class': 'form-control',
+                                           'rows': '5'}),
+            'other_contacts': widgets.Textarea(attrs={'class': 'form-control',
+                                                      'rows': '5'})
         }
 
     def clean(self):

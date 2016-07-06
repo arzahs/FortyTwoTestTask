@@ -27,9 +27,7 @@
 }
 .login{
     display: block;
-    float: right;
-    width: 20%;
-    padding-top: 25px;
+    padding-top: 30px;
 }
 img{
     margin-top: 10px;
@@ -53,4 +51,10 @@ table, th, td {
 
 tr td:last-child{
     width: 60px;
+}
+.line{
+    border: 0;
+    height: 0;
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }

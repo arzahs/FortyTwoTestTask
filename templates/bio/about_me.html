@@ -20,72 +20,36 @@
 {% block content %}
 
     <div class="row">
-        <div class="left">
-            Name {{ person.name }}
-        </div>
-        <div class="right">
-            Contacts: {{ person.contacts }}
-        </div>
-
-
-    </div>
-
-    <div class="row">
-        <div class="left">
-            Last name {{ person.last_name }}
-        </div>
-        <div class="right">
-            Email: {{ person.email }}
-        </div>
-
-
-    </div>
-    <div class="row">
-
-        <div class="right">
-            Jabber: {{ person.jabber }}
-        </div>
-
-
-    </div>
-    <div class="row">
-         <div class="left">
-            Date of birth {{ person.birthday }}
-        </div>
-        <div class="right">
-             Skype {{ person.skype }}
-        </div>
-
-
-    </div>
-    <div class="row">
-         <div class="left">
-            Photo: <p>
+        <div class="col-md-6">
+            <h4>Name: {{ person.name }}</h4>
+            <h4>Last name: {{ person.last_name }}</h4>
+            <h4>Date of birth: {{ person.birthday }}</h4>
+            <h4>Photo:</h4> <p>
              {% if person.photo %}
                 <img src="{{ person.photo.url }}" alt="">
              {% endif %}
-         </p>
+
         </div>
-        <div class="right">
-               Other contacts:
-    <p>
+        <div class="col-md-6">
+           <h4> Contacts: {{ person.contacts }}</h4>
+            <h4>Email: {{ person.email }}</h4>
+            <h4>Jabber: {{ person.jabber }}</h4>
+            <h4>Skype: {{ person.skype }}</h4>
+             <h4>Other contacts:</h4>
+            <p>
             {{ person.other_contacts }}
-
-    </p>
+            </p>
+            <h4>Bio:</h4>
+            <p>
+                {{ person.bio }}
+            </p>
         </div>
-
-
     </div>
-      <div class="row">
-         <div class="right">
-            Bio: <p>
-            {{ person.bio }}
-         </p>
-        </div>
-        </div>
 
-
+    <div class="row">
+        <div class="col-md-12">
+            <hr class="line">
+            <a href="{% url "requests_list" %}">Requests</a>
+        </div>
     </div>
-    <hr>
-    <a href="{% url "requests_list" %}">Requests</a>
 {% endblock %}

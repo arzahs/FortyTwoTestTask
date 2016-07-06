@@ -18,14 +18,23 @@
 
     </head>
     <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
-        <div class="header row"><div class="logo"><h1>42 Coffee Cups Test Assignment</h1></div>
-        {% block login %}{% endblock %}
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-md-9">
+                <h1>42 Coffee Cups Test Assignment</h1>
+            </div>
+            <div class="col-md-3">
+                {% block login %}{% endblock %}
+            </div>
+
         </div>
 
         {% block content %}
         {% endblock content %}
 {#    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>#}
-
+    </div>
         {% block scripts %}
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
             <script src="{% static 'js/bootstrap.min.js' %}"></script>

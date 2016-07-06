@@ -7,86 +7,122 @@
 {% block body_class %}container{% endblock %}
 
 {% block content %}
-    <form  id="edit_form" action="" method="POST" enctype="multipart/form-data">
+    <form class="form-horizontal"  id="edit_form" action="" method="POST" enctype="multipart/form-data">
+
     {% csrf_token %}
     <div class="row">
-        <div class="left">
-            Name: {{ form.name }}
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ form.name.id_for_label }}" class="col-sm-3">Name:</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="{{ form.name.auto_id }}" name="{{ form.name.html_name }}">
+                    <label class="error"></label>
+                </div>
+
+
+
+            </div>
+            <div class="form-group">
+                <label for="id_last_name" class="col-sm-3">Last name:</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="{{ form.last_name.auto_id }}" name="{{ form.last_name.html_name }}">
+                    <label class="error"></label>
+                </div>
+            </div>
+            <div class="form-group">
+
+            <label for="{{ form.birthday.id_for_label }}" class="col-sm-3">Date of birth:</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="{{ form.birthday.auto_id }}" name="{{ form.birthday.html_name }}">
+                    <label class="error"></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_photo" class="col-sm-3">Photo:</label>
+
+                <div class="col-md-9">
+                    <span class="btn btn-default btn-file">
+                        Browse {{ form.photo }}
+                    </span>
+                 <button id="cancel_load" class="btn btn-default">Cancel load photo</button>
+                    <br>
+                    <img id="photo" src="" style="display: none;">
+                </div>
+
+
+
         </div>
-        <div class="right">
-            Contacts: {{ form.contacts }}
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ form.contacts.id_for_label }}" class="col-sm-3">Contacts:</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="{{ form.contacts.auto_id }}" name="{{ form.contacts.html_name }}">
+                    <label class="error"></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}" class="col-sm-3">Email:</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="{{ form.email.auto_id }}" name="{{ form.email.html_name }}">
+                    <label class="error"></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.jabber.id_for_label }}" class="col-sm-3">Jabber:</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="{{ form.jabber.auto_id }}" name="{{ form.jabber.html_name }}">
+                    <label class="error"></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.skype.id_for_label }}" class="col-sm-3">Skype:</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="{{ form.skype.auto_id }}" name="{{ form.skype.html_name }}">
+                    <label class="error"></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.other_contacts.id_for_label }}" class="col-sm-3">Other contacts:</label>
+                <div class="col-md-9">
+                        {{ form.other_contacts }}
+                        <label class="error"></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.bio.id_for_label }}" class="col-sm-3">Bio:</label>
+                <div class="col-md-9">
+                        {{ form.bio }}
+                        <label class="error"></label>
+                </div>
+            </div>
+        </div>
         </div>
 
 
-    </div>
 
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <p id="status_save" class="alert alert-info">Saving data...</p>
+                <p id="status_load" class="alert alert-info">Loading data...</p>
+                <p id="status_error" class="alert alert-danger">Error, please, input correct</p>
+                <p id="error_list" class="alert alert-danger"></p>
+                <p id="status_success" style="display: none;" class="alert alert-success">Changes have been saved</p>
+                <input type="submit" class="btn btn-primary" value="Save">
+                <a href="{% url 'about_me' %}">Сancel</a>
+            </div>
+        </div>
+    </form>
     <div class="row">
-        <div class="left">
-            Last name {{ form.last_name }}
+        <div class="col-md-12">
+            <hr class="line">
+            <a href="{% url "requests_list" %}">Requests</a>
         </div>
-        <div class="right">
-            Email: {{ form.email }}
-        </div>
-
-
     </div>
-    <div class="row">
-
-        <div class="right">
-            Jabber: {{ form.jabber }}
-        </div>
-
-
-    </div>
-    <div class="row">
-         <div class="left">
-            Date of birth {{ form.birthday }}
-        </div>
-        <div class="right">
-             Skype {{ form.skype }}
-        </div>
-
-
-    </div>
-    <div class="row">
-         <div class="left">
-            Photo: <p>
-             {{ form.photo }}
-             <button id="cancel_load" style="display: none;">Cancel load photo</button>
-             <br>
-             <img id="photo" src="" style="display: none;">
-
-         </p>
-        </div>
-        <div class="right">
-               Other contacts:
-    <p>
-            {{ form.other_contacts }}
-
-    </p>
-        </div>
-
-
-    </div>
-      <div class="row">
-         <div class="right">
-            Bio: <p>
-            {{ form.bio }}
-         </p>
-        </div>
-        </div>
-        <p id="status_save">Saving data...</p>
-        <p id="status_load">Loading data...</p>
-        <p id="status_error">Error, repeat late. Errors list:</p>
-        <p id="error_list"></p>
-        <p id="status_success" style="display: none;">Changes have been saved</p>
-        <input type="submit" value="Save">
-        <a href="{% url 'about_me' %}">Сancel</a>
-
-    </div>
-        </form>
-    <hr>
-    <a href="{% url "requests_list" %}">Requests</a>
 
 {% endblock %}
 

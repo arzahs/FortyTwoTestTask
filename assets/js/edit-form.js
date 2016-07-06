@@ -70,16 +70,21 @@ $(document).ready(function () {
 
         },
         error: function (data) {
-            $('#error_list').text('');
+            dataTest = JSON.parse(data.responseText)['errors'];
+            console.log(dataTest);
             $.each(JSON.parse(data.responseText)['errors'], function (i, item) {
-                $('#error_list').text($('#error_list').text()+item[0]+' ');
+                $('input[name='+i+']').closest('div').addClass('has-error');
+                $('input[name='+i+']').siblings('.error').text(item[0]);
+                if(i === '__all__'){
+                    $('#error_list').text(item[0]);
+                    $('#error_list').show();
+                }
             });
             $("#status_error").text();
             $("#status_save").hide();
             $('input').prop('disabled', false);
             $('textarea').prop('disabled', false);
             $("#status_error").show();
-            $('#error_list').show();
         }
     });
 

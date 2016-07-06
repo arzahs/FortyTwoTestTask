@@ -61,6 +61,10 @@ class AboutMe(View):
 
 class RequestList(View):
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(RequestList, self).dispatch(*args, **kwargs)
+
     def get(self, request, *args, **kwargs):
         if request.GET.get('id'):
             last_id = int(request.GET.get('id'))

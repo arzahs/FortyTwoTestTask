@@ -35,7 +35,7 @@ setInterval(function(){
     var id = maxId;
     $.ajax({
         type: 'GET',
-        url: '/requests_list',
+        url: location.href,
         data: {id: id, priority: type_sort},
         dataType: 'json'
     }).success(function(response){
@@ -148,7 +148,7 @@ function sendPriority(elm) {
                 }
                 $.ajax({
                     type: 'POST',
-                    url: '/requests_list/',
+                    url: location.href,
                     data: {id: id, priority: value, csrfmiddlewaretoken: csrf},
                     dataType: 'json'
                 }).success(function(response){

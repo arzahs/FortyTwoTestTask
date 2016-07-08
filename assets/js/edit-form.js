@@ -6,7 +6,7 @@ $(document).ready(function () {
     
     $.ajax({
         method: 'GET',
-        url: '/',
+        url: django_urls.about_me,
         dataType: 'json',
         success: function (data) {
             $("#id_name").val(data['name']);
